@@ -1,8 +1,6 @@
 # Auth Tailwind (React) – React + Tailwind
 
-A React rewrite of [markmuthii/auth-tailwind](https://github.com/markmuthii/auth-tailwind), a vanilla HTML/CSS/JS authentication UI. This is a **fork/port**, not a redesign — every Tailwind class, every layout, every page looks pixel-identical to the original. The only thing that changed is _how_ it's built: four separate `.html` files + `localStorage`-poking scripts became a single React app with client-side routing and context-based state.
 
-I mainly wanted to practice converting a plain HTML/JS project into a proper React app without touching the visual output at all, while keeping the auth logic (login, logout, route protection) faithful to the original.
 
 ---
 
@@ -28,16 +26,7 @@ npm run dev
 
 ---
 
-## Routes (replacing the old `.html` files)
 
-| Old file         | New route    | Component                 |
-| ---------------- | ------------ | ------------------------- |
-| `index.html`     | `/`          | `src/pages/Landing.jsx`   |
-| `login.html`     | `/login`     | `src/pages/Login.jsx`     |
-| `register.html`  | `/register`  | `src/pages/Register.jsx`  |
-| `dashboard.html` | `/dashboard` | `src/pages/Dashboard.jsx` |
-
----
 
 ## Login / Logout Logic
 
