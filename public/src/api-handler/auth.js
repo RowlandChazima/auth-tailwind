@@ -1,6 +1,6 @@
-import { API_BASE_URL } from "./client";
+import { API_BASE_URL } from "./client.js";
 
-// Sends the registration  to POST /api/v1/auth/register.
+// Sends the registration  to POST /api-handler/v1/auth/register.
 export async function registerUser(data) {
   const response = await fetch(`${API_BASE_URL}/auth/register`, {
     method: "POST",
@@ -25,7 +25,7 @@ export async function registerUser(data) {
   return resData;
 }
 
-// Sends login credentials to POST /api/v1/auth/login.
+// Sends login credentials to POST /api-handler/v1/auth/login.
 
 // success check happening after parsing the JSON body.
 export async function loginUser(data) {

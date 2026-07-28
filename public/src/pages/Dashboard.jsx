@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
-import { fetchUsers } from "../api/users";
+import { useAuth } from "../hooks/useAuth.js";
+import { fetchUsers } from "../api-handler/users.js";
 
 // Mirrors populateUserAnalytics from the original dashboard.js.
 function getAnalytics(users) {

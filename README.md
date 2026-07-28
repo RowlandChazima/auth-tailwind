@@ -1,121 +1,16 @@
-# Auth Tailwind (React) – React + Tailwind
+# React + Vite
 
-A React rewrite of [markmuthii/auth-tailwind](https://github.com/markmuthii/auth-tailwind), a vanilla HTML/CSS/JS authentication UI. This is a **fork/port**, not a redesign — every Tailwind class, every layout, every page looks pixel-identical to the original. The only thing that changed is _how_ it's built: four separate `.html` files + `localStorage`-poking scripts became a single React app with client-side routing and context-based state.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-I mainly wanted to practice converting a plain HTML/JS project into a proper React app without touching the visual output at all, while keeping the auth logic (login, logout, route protection) faithful to the original.
+Currently, two official plugins are available:
 
----
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
--
+## React Compiler
 
-## 🚀 Installation
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-```bash
-cd auth-tailwind-react
-```
+## Expanding the ESLint configuration
 
-Install the dependencies
-
-```bash
-npm install
-```
-
-Run the dev server
-
-```bash
-npm run dev
-```
-
----
-
-## Routes (replacing the old `.html` files)
-
-| Old file         | New route    | Component                 |
-| ---------------- | ------------ | ------------------------- |
-| `index.html`     | `/`          | `src/pages/Landing.jsx`   |
-| `login.html`     | `/login`     | `src/pages/Login.jsx`     |
-| `register.html`  | `/register`  | `src/pages/Register.jsx`  |
-| `dashboard.html` | `/dashboard` | `src/pages/Dashboard.jsx` |
-
----
-
-## Login / Logout Logic
-
-The original project tracked auth state with one flag in `localStorage`: `auth_logged_in`. I kept that exact mechanism instead of switching to cookies/JWT on the frontend, so the behavior matches 1:1.
-
-**Login**
-
-1. User submits the login form.
-2. `loginUser()` sends `POST /auth/login` to the API.
-3. If the API responds with `success: true`, we call `login()` from `AuthContext`, which sets `localStorage.auth_logged_in = true` and flips React state to `isLoggedIn = true`.
-4. User is redirected to `/dashboard`.
-
-**Logout**
-
-1. User clicks the logout button (on the dashboard, or on the landing page nav).
-2. `logout()` from `AuthContext` removes `auth_logged_in` from `localStorage` and flips `isLoggedIn` back to `false`.
-3. User is sent back to `/login`.
-
-That's it — no tokens are inspected on the frontend, no expiry logic. It's a simple boolean flag, same as the original scripts.
-
----
-
-## The "Middleware": `RouteGuard.jsx`
-
-The original project used a `window.onload` handler in `script.js` that ran on every page load and manually checked `window.location.pathname` to decide whether to redirect. `RouteGuard.jsx` is the React equivalent of that — it's a wrapper component that sits above all the routes and re-runs its check every time the URL or auth state changes:
-
-```
-Not logged in + on /dashboard   → redirect to /login
-Logged in + on /login/register  → redirect to /dashboard
-```
-
-It uses `useLocation()` to know the current path and `useNavigate()` to redirect, wrapped in a `useEffect` so the check re-runs whenever `isLoggedIn` or the pathname changes — mirroring the original's "check on every page load" behavior, just reactive instead of running once per full page refresh.
-
----
-
-## ⚛️ New React Concepts I learned and used
-
-**`createContext`**
-Used in `AuthContext.jsx` to create a shared "channel" for auth state. Instead of passing `isLoggedIn`, `login`, and `logout` down as props through every component, any page wrapped inside `<AuthContext.Provider>` can just call `useAuth()` and grab what it needs directly — no prop drilling through `App.jsx` → `Routes` → each page.
-
-**`useCallback`**
-Used to wrap the `login` and `logout` functions so React doesn't recreate new function instances on every render:
-
-```js
-const login = useCallback(() => {
-  localStorage.setItem(STORAGE_KEY, true);
-  setIsLoggedIn(true);
-}, []);
-```
-
-Since `login` and `logout` are placed inside the context's `value` object, giving them a stable reference (via the empty `[]` dependency array) prevents every component consuming `AuthContext` from thinking the context changed and re-rendering unnecessarily.
-
----
-
-## 📁 Structure
-
-```
-src/
-  api/
-    client.js       # API URL
-    auth.js         # registerUser(), loginUser()
-    users.js        # fetchUsers()
-  components/
-    RouteGuard.jsx   # middleware
-  context/
-    AuthContext.jsx  # login/logout state, backed by localStorage
-  hooks/
-    useAuth.js
-  pages/
-    Landing.jsx
-    Login.jsx
-    Register.jsx
-    Dashboard.jsx
-  utils/
-    validation.js    # phoneRegex, emailRegex, trimFormValues()
-  App.jsx
-  main.jsx
-  index.css
-```
-
----
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.

@@ -1,6 +1,6 @@
-import { API_BASE_URL } from "./client";
+import { API_BASE_URL } from "./client.js";
 
-// Fetches all users from GET /api/v1/users.
+// Fetches all users from GET /api-handler/v1/users.
 // fetchUserData
 export async function fetchUsers() {
   const response = await fetch(`${API_BASE_URL}/users`);
