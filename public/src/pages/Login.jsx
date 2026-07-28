@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
-import { loginUser } from "../api/auth";
-import { trimFormValues } from "../utils/validation";
+import { useAuth } from "../hooks/useAuth.js";
+import { loginUser } from "../api-handler/auth.js";
+import { trimFormValues } from "../utils/validation.js";
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");

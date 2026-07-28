@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom";
-import { RouteGuard } from "./components/RouteGuard";
-import Landing from "./pages/Landing";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
+import { RouteGuard } from "./components/RouteGuard.jsx";
+import Landing from "./pages/Landing.jsx";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
 
 export default function App() {
   return (

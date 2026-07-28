@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { registerUser } from "../api/auth";
-import { emailRegex, phoneRegex, trimFormValues } from "../utils/validation";
+import { registerUser } from "../api-handler/auth.js";
+import { emailRegex, phoneRegex, trimFormValues } from "../utils/validation.js";
 
 export default function Register() {
   const [errorMessage, setErrorMessage] = useState("");
